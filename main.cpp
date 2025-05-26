@@ -28,5 +28,41 @@ int main()
 		glfwTerminate();
 		return 1;
 	}
+
+	//get buffer size information
+	int bufferWidth, bufferHeight;
+	glfwGetFramebufferSize(mainWindow, &bufferWidth, &bufferHeight);
+
+	//set the context for glew to use
+	glfwMakeContextCurrent(mainWindow);
+
+	//allow modern extention feature
+	glewExperimental = GL_TRUE;
+
+	if (glewInit() != GLEW_OK)
+	{
+		printf("glfw init fail");
+		glfwDestroyWindow(mainWindow);
+		glfwTerminate();
+		return 1;
+	}
+
+	//setup viewport size
+	glViewport(0, 0, bufferWidth, bufferHeight);
+
+	//Loop until window close
+
+	while (!glfwWindowShouldClose(mainWindow))
+	{
+		//get + handle user input events
+		glfwPollEvents(); // get all the events
+
+		//clear window
+		glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
+		glClear(GL_COLOR_BUFFER_BIT);
+
+		glfwSwapBuffers(mainWindow);
+	}
+
 	return 0;
 }
